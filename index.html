@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+
+    <button id="toggle-theme">Dark Mode</button>
+
+    <div class="container no-select">
+      <div class="result-container no-select">
+        <button class="show-history-btn"><i class="fa-solid fa-clock-rotate-left"></i></button>
+
+          <div class="show-history">
+            <button class="close-history-btn"><i class="fa-solid fa-xmark"></i></button>
+          </div>
+
+            <div class="result" id="final-result"></div>
+            <div class="show-typing" id="typing">0</div>
+      </div>
+
+      <div class="buttons-container no-select">
+        <button class="no-select btn operator all-clear" id="all-clear">AC</button>
+        <button class="no-select btn operator one-clear" id="one-clear">X</button>
+        <button class="no-select btn operator percent" id="percent">%</button>
+        <button class="no-select btn operator divide" id="divide">÷</button>
+        <button class="no-select btn num">7</button>
+        <button class="no-select btn num">8</button>
+        <button class="no-select btn num">9</button>
+        <button class="no-select btn operator multiply" id="multiply">*</button>
+        <button class="no-select btn num">4</button>
+        <button class="no-select btn num">5</button>
+        <button class="no-select btn num">6</button>
+        <button class="no-select btn operator subtract" id="subtract">-</button>
+        <button class="no-select btn num">1</button>
+        <button class="no-select btn num">2</button>
+        <button class="no-select btn num">3</button>
+        <button class="no-select btn operator addition" id="addition">+</button>
+        <button class="no-select btn num">0</button>
+        <button class="no-select btn decimal operator" id="decimal">.</button>
+        <button class="no-select btn equal" id="equal">=</button>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
