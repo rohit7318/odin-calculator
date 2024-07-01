@@ -179,7 +179,7 @@ function appendOperator(id)
             case '.':
                 typedTextEl.textContent+='.';
                 break;
-            default : alert('nothing');
+            default :console('nothing');
                 break;
         }
     }
@@ -343,7 +343,7 @@ function calculateArray(arrayOfThreeElems)
             break;
                 
         default:
-            alert('default is running');
+            console('default is running');
             break;
     }
 
