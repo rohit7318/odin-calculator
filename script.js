@@ -10,6 +10,10 @@ const showHistoryBtn = document.querySelector('.show-history-btn');
 const closeHistoryBtn = document.querySelector('.close-history-btn');
 
 
+let operatorsArray = ['%', '-', '+', '*', '÷'];
+
+
+
 toggleThemeBtn.addEventListener('click',()=>{
 
     htmlEl.classList.toggle('dark');
@@ -35,7 +39,6 @@ window.addEventListener('keydown',(event)=>{
     {
         case '1':
                 appendNum(event.key)
-                calculateResult(typedTextEl.textContent);
                 break;
         case '2':
                 appendNum(event.key)
@@ -43,35 +46,27 @@ window.addEventListener('keydown',(event)=>{
                 break;
         case '3':
                 appendNum(event.key)
-                calculateResult(typedTextEl.textContent);
                 break;
         case '4':
                 appendNum(event.key)
-                calculateResult(typedTextEl.textContent);
                 break;
         case '5':
                 appendNum(event.key)
-                calculateResult(typedTextEl.textContent);
                 break;
         case '6':
                 appendNum(event.key)
-                calculateResult(typedTextEl.textContent);
                 break;
         case '7':
                 appendNum(event.key)
-                calculateResult(typedTextEl.textContent);
                 break;
         case '8':
                 appendNum(event.key)
-                calculateResult(typedTextEl.textContent);
                 break;
         case '9':
                 appendNum(event.key)
-                calculateResult(typedTextEl.textContent);
                 break;
         case '0':
                 appendNum(event.key)
-                calculateResult(typedTextEl.textContent);
                 break;
         case 'Backspace':
                 removeLastChar();
@@ -148,39 +143,49 @@ function buttonClicked(event)
             if(target.classList.contains('equal'))
                 {
                     let expression = typedTextEl.textContent;
-                    console.log(expression);
-                    calculateResult(expression);
-
-
+                    let arrayExpression  = splitStringExpressionToArray(expression);
+                    let result = calculateExp(arrayExpression);
+                    typedTextEl.textContent = result;
+                    finalResultEl.textContent = result;
                 }
-            
-            
         }
 }
 
 
-function calculateResult(expression)
+function calculateExp(fullArray)
 {
-    let operatorsArray = ['%', '-', '+', '*', '÷'];
+    // make array of operators in fullArray
+    let operatorsInExpression = fullArray.filter((elem)=>{
+        return operatorsArray.includes(elem)
+    });
+
+    let totalNumberOfOperators = operatorsInExpression.length;
+    let i = 0;
+    while(i<totalNumberOfOperators)
+        {
+            if(fullArray.length>=3)
+                {
+                    let firstThreeElemsArray = fullArray.slice(0,3);
+                    let result = calculateArray(firstThreeElemsArray);
+                    fullArray.splice(0,3);
+                    fullArray.splice(0,0,result);
+                }
+                i++;
+        }
+        return fullArray[0];
+}
+
+
+function splitStringExpressionToArray(expression)
+{
     // Create a regex pattern that matches any of the operators or numbers (including decimals)
     let pattern = new RegExp(`(\\d+(?:\\.\\d+)?|[${operatorsArray.join('')}]|\\D)`, 'g');
     // Split the expression
     let expressionArray = expression.match(pattern);
-    console.log(expressionArray);
-
-    if(expressionArray.length>1 && expressionArray.length%2!==0)
-        {
-            console.log('calculating..');
-            calculateArray(expressionArray);
-        }
-    else 
-    {
-        console.log('waiting');
-    }
-
-
-
+    return expressionArray;
 }
+
+
 
 
 
@@ -190,11 +195,11 @@ function calculateResult(expression)
 
 
 
-function calculateArray(array)
+function calculateArray(arrayOfThreeElems)
 {
-    let [leftOperand,operator,rightOperand] = array;
-    updateHistory(array);
-    
+
+    let [leftOperand,operator,rightOperand] = arrayOfThreeElems;
+    updateHistory(arrayOfThreeElems);
     let result ;
     switch(operator)
     {
@@ -224,17 +229,7 @@ function calculateArray(array)
     }
 
 
-
-    finalResultEl.textContent = result;
-    typedTextEl.textContent = result;
-
-
-
-
-
-    console.log('leftOperand : ' + leftOperand);
-    console.log('operator : ' + operator);
-    console.log('rightOperand : ' + rightOperand);
+    return result;
 
 }
 
