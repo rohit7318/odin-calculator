@@ -35,6 +35,9 @@ buttonsContainer.addEventListener('click',buttonClicked);
 
 window.addEventListener('keydown',(event)=>{
 
+    
+   
+   
     switch(event.key)
     {
         case '1':
@@ -42,7 +45,6 @@ window.addEventListener('keydown',(event)=>{
                 break;
         case '2':
                 appendNum(event.key)
-                calculateResult(typedTextEl.textContent);
                 break;
         case '3':
                 appendNum(event.key)
@@ -74,11 +76,105 @@ window.addEventListener('keydown',(event)=>{
         case 'Delete':
             removeAll();
             break;
+        case '+':
+            if(event.shiftKey) appendOperator('+');
+            break;
+        case '-':
+             appendOperator('-');
+            break;
+        case '/':
+            appendOperator('/');
+            break;
+        case '*':
+            if(event.shiftKey) appendOperator('*');
+            break;
+        case '%':
+            if(event.shiftKey) appendOperator('%');
+            break;
+        case 'Enter':
+            startCalculation();
+            break;
+        case 'H':
+            if(event.shiftKey)
+            {
+                showHistoryDiv.style.visibility = 'visible';
 
+            };
+        case 'c':
+            if(event.ctrlKey)
+                {
+                    showHistoryDiv.style.visibility = 'hidden';
+                }
+            break;
+        
 
 
     }
+
+    console.log(event.key);
+
+    
+    
+    
 })
+
+
+function appendOperator(id)
+{
+    
+    // checkLastOperator();
+    if(isLastCharOperator())
+        {
+            console.log('yes last char is operator');
+            // do nothing if last char is operator
+        }
+    else 
+    {
+        switch(id)
+        {
+            case 'all-clear':
+                break;
+            case 'one-clear':
+                break;
+            case 'percent':
+                typedTextEl.textContent+='%';
+                break;
+            case 'divide':
+                typedTextEl.textContent+='÷';
+                break;
+            case 'multiply':
+                typedTextEl.textContent+='*';
+                break;
+            case 'subtract':
+                typedTextEl.textContent+='-'
+                break;
+            case 'addition':
+                typedTextEl.textContent+='+';
+                break;
+            case 'decimal':
+                typedTextEl.textContent+='.';
+                break;
+            case '+':
+                typedTextEl.textContent+='+'
+                break;
+            case '-':
+                typedTextEl.textContent+='-';
+                break;
+            case '/':
+                typedTextEl.textContent+='/';
+                break;
+            case '*':
+                typedTextEl.textContent+='*';
+                break;
+            case '%':
+                typedTextEl.textContent+='%';
+                break;
+            
+            default : alert('nothing');
+                break;
+        }
+    }
+}
 
 
 function appendNum(num)
@@ -142,13 +238,35 @@ function buttonClicked(event)
             // Setting conditions for equal || result
             if(target.classList.contains('equal'))
                 {
-                    let expression = typedTextEl.textContent;
-                    let arrayExpression  = splitStringExpressionToArray(expression);
-                    let result = calculateExp(arrayExpression);
-                    typedTextEl.textContent = result;
-                    finalResultEl.textContent = result;
+                    startCalculation();
                 }
         }
+}
+
+
+function startCalculation()
+{
+    let arrayExpression = converStringToArray(getTextForCalculation());
+    let result = calculateExp(arrayExpression);
+    updateResult(result);
+}
+
+
+function updateResult(result)
+{
+    typedTextEl.textContent = result;
+    finalResultEl.textContent = result;
+}
+
+function getTextForCalculation()
+{
+    return typedTextEl.textContent;
+}
+
+function converStringToArray(str)
+{
+    let arrayExpression = splitStringExpressionToArray(str);
+    return arrayExpression;
 }
 
 
@@ -184,14 +302,6 @@ function splitStringExpressionToArray(expression)
     let expressionArray = expression.match(pattern);
     return expressionArray;
 }
-
-
-
-
-
-
-        
-
 
 
 
@@ -279,52 +389,8 @@ function removeLastChar()
             let newText = currentText.slice(0,-1);
             typedTextEl.textContent = newText;
         }
-        
 }
 
-function appendOperator(id)
-{
-    
-    // checkLastOperator();
-    if(isLastCharOperator())
-        {
-            console.log('yes last char is operator');
-            // do nothing if last char is operator
-        }
-    else 
-    {
-        switch(id)
-        {
-            case 'all-clear':
-                break;
-            case 'one-clear':
-                break;
-            case 'percent':
-                typedTextEl.textContent+='%';
-                break;
-            case 'divide':
-                typedTextEl.textContent+='÷';
-                break;
-            case 'multiply':
-                typedTextEl.textContent+='*';
-                break;
-            case 'subtract':
-                typedTextEl.textContent+='-'
-                break;
-            case 'addition':
-                typedTextEl.textContent+='+';
-                break;
-            case 'decimal':
-                typedTextEl.textContent+='.';
-                break;
-            default : alert('nothing');
-            break;
-        }
-    }
-
-
-    // console.log(typedTextEl.textContent[typedTextEl.textContent.length-1])
-}
 
 
 function isLastCharOperator()
@@ -332,7 +398,7 @@ function isLastCharOperator()
     let string = typedTextEl.textContent;
     let lastChar = string[string.length-1];
 
-    let operatorsArray = ['%','-','+','*','÷','.'];
+    let operatorsArray = ['%','-','+','*','÷','.','/'];
     return operatorsArray.includes(lastChar);
         
 }
