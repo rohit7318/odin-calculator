@@ -77,6 +77,9 @@ window.addEventListener('keydown',(event)=>{
             removeAll();
             break;
         case '+':
+            appendOperator('+');
+            break;
+        case '+':
             if(event.shiftKey) appendOperator('+');
             break;
         case '-':
@@ -86,8 +89,13 @@ window.addEventListener('keydown',(event)=>{
             appendOperator('/');
             break;
         case '*':
+            appendOperator('*');
+            break;
+        case '*':
             if(event.shiftKey) appendOperator('*');
             break;
+        case '.':
+            appendOperator('.');
         case '%':
             if(event.shiftKey) appendOperator('%');
             break;
@@ -109,8 +117,11 @@ window.addEventListener('keydown',(event)=>{
         
 
 
+
+
     }
 
+    console.log(event.key);
     
 })
 
@@ -165,7 +176,9 @@ function appendOperator(id)
             case '%':
                 typedTextEl.textContent+='%';
                 break;
-            
+            case '.':
+                typedTextEl.textContent+='.';
+                break;
             default : alert('nothing');
                 break;
         }
